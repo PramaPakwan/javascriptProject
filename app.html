@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>OOP Using JAvascript</title>
+	<script src="JS/models/student.model.js"></script>
+	<script src="JS/services/student.service.js"></script>
+</head>
+<body>
+<h3>Student Management System</h3>
+<form>
+	<div>First Name:<input type="text" id="fname" name="fname" /></div>
+	<div>Last Name:<input type="text" id="lname" name="lname" /></div>
+	<div>Email:<input type="email" id="email" name="email" /></div>
+	<button type="submit" id="save-student">SAVE</button>
+
+	<a href="javascript:void(0)" id="show-students">Show Students </a>
+
+	<div id="student-list"></div>
+</form>
+<script>
+function $(key){
+	return document.getElementById(key);
+}
+var studentService=new StudentService();
+
+window.onload=function(){
+	
+	
+	var saveButton=$("save-student");
+	var showLink=$("show-students");
+	var showStudentList=$("student-list");
+
+	saveButton.onclick=function(){
+		var stu=new Student();
+		stu.firstName=$("fname").value;
+		stu.lastName=$("lname").value;
+		stu.email=$("email").value;
+
+		studentService.add(stu);
+		return false;
+	};
+
+	showLink.onclick=function(){
+
+		var content="";
+		studentList=studentService.getAll();
+		for(var i=0; i < studentList.length;i++){
+			var student=studentList[i];
+			content+="<li>" + student.firstName + " " + student.lastName + " "+student.email +"</li>";
+			
+		};
+		showStudentList.innerHTML=content;
+	};
+};
+
+</script>
+
+</body>
+</html>
